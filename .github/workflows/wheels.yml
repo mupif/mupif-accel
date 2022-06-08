@@ -26,7 +26,7 @@ jobs:
         #   CIBW_SOME_OPTION: value
         # skip 32-bit builds and PyPy
         env:
-            CIBW_SKIP: *-win32 *-manylinx_i686 pp*
+            CIBW_SKIP: "*-win32 *-manylinx_i686 pp*"
       - uses: actions/upload-artifact@v2
         with:
           path: ./wheelhouse/*.whl
