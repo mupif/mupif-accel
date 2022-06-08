@@ -7,20 +7,26 @@ jobs:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false # see if other jobs finish
       matrix:
         os: [ubuntu-20.04, windows-2019, macOS-10.15]
 
     steps:
       - uses: actions/checkout@v2
-
       # Used to host cibuildwheel
       - uses: actions/setup-python@v2
+      # https://github.com/theupdateframework/python-tuf/issues/1248
+      - name: Install MSVC if under Windows
+        uses: ilammy/msvc-dev-cmd@v1
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.6.1
         # run: python -m cibuildwheel --output-dir wheelhouse
         # to supply options, put them in 'env', like:
         # env:
         #   CIBW_SOME_OPTION: value
+        # skip 32-bit builds and PyPy
+        env:
+            CIBW_SKIP: *-win32 *-manylinx_i686 pp*
       - uses: actions/upload-artifact@v2
         with:
           path: ./wheelhouse/*.whl
