@@ -1,1 +1,3 @@
-build
+build*
+*.egg-info
+wheelhouse
