@@ -9,8 +9,8 @@ jobs:
     strategy:
       fail-fast: false # see if other jobs finish
       matrix:
-        os: [ubuntu-20.04, windows-2019, macOS-10.15]
-
+        # don't run under windows for now (MSVC not found by cmake, despite ilammy/msvc-dev-cmd)
+        os: [ubuntu-20.04, macOS-10.15] #  windows-2019,
     steps:
       - uses: actions/checkout@v2
       # Used to host cibuildwheel
@@ -26,7 +26,7 @@ jobs:
         #   CIBW_SOME_OPTION: value
         # skip 32-bit builds and PyPy
         env:
-            CIBW_SKIP: "*-win32 *-manylinx_i686 pp*"
+            CIBW_SKIP: "*-win32 *-manylinux_i686 pp* *-musllinux_*"
       - uses: actions/upload-artifact@v2
         with:
           path: ./wheelhouse/*.whl

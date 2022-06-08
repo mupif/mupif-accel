@@ -21,6 +21,8 @@ FetchContent_MakeAvailable(Eigen3)
 
 
 find_package(Eigen3 REQUIRED)
+
+# installed via pyproject.toml
 find_package(pybind11 REQUIRED)
 # find_package(Boost COMPONENTS multi_array)
 
