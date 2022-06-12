@@ -1,6 +1,7 @@
 # https://github.com/scikit-build/scikit-build-sample-projects/tree/master/projects/hello-pybind11
 project(mupifAccel LANGUAGES CXX)
 cmake_minimum_required(VERSION 3.12)
+set(CMAKE_CXX_STANDARD 14)
 
 include(GNUInstallDirs)
 include(FetchContent)
