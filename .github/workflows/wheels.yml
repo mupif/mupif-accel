@@ -16,20 +16,13 @@ jobs:
       # Used to host cibuildwheel
       - uses: actions/setup-python@v2
       # https://github.com/pypa/cibuildwheel/issues/643
-      - name: Install MSVC if under Windows
-        uses: ilammy/msvc-dev-cmd@v1
-        # https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B#Internal_version_numbering
-        with:
-          toolset: "14.1"
-      - uses: ilammy/msvc-dev-cmd@v1
-        with:
-          toolset: "14.30"
-      - uses: ilammy/msvc-dev-cmd@v1
-        with:
-          toolset: "14.31"
-      - uses: ilammy/msvc-dev-cmd@v1
-        with:
-          toolset: "14.32"
+      #- name: Install MSVC if under Windows
+      #  uses: ilammy/msvc-dev-cmd@v1
+      #  # https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B#Internal_version_numbering
+      #  with:
+      #    toolset: "14.1"
+      - name: Prepare MSVC
+        uses: bus1/cabuild/action/msdevshell@v1
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.6.1
         # run: python -m cibuildwheel --output-dir wheelhouse
