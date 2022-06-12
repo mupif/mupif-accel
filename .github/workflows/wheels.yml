@@ -10,14 +10,18 @@ jobs:
       fail-fast: false # see if other jobs finish
       matrix:
         # don't run under windows for now (MSVC not found by cmake, despite ilammy/msvc-dev-cmd)
-        os: [ubuntu-20.04, macOS-10.15] #  windows-2019,
+        os: [ubuntu-20.04, windows-2019, macOS-10.15]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # Used to host cibuildwheel
       - uses: actions/setup-python@v2
-      # https://github.com/theupdateframework/python-tuf/issues/1248
+      # https://github.com/pypa/cibuildwheel/issues/643
       - name: Install MSVC if under Windows
         uses: ilammy/msvc-dev-cmd@v1
+        # https://devblogs.microsoft.com/cppblog/side-by-side-minor-version-msvc-toolsets-in-visual-studio-2017/
+        # this might be MSVC 2017 (version 15.1 & 15.2)
+        with:
+          toolset: 14.10
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.6.1
         # run: python -m cibuildwheel --output-dir wheelhouse
@@ -47,7 +51,7 @@ jobs:
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
     # upload to PyPI on every tag starting with 'v'
-    # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     # alternatively, to publish when a GitHub Release is created, use the following rule:
     # if: github.event_name == 'release' && github.event.action == 'published'
     steps:
