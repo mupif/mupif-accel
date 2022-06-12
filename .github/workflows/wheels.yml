@@ -22,6 +22,18 @@ jobs:
         # this might be MSVC 2017 (version 15.1 & 15.2)
         with:
           toolset: 14.10
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: 14.20 # VS 2022 Version 17.0
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: 14.30 # VS 2022 Version 17.0
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: 14.31 # VS 2022 Version 17.0
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: 14.32 # VS 2022 Version 17.0
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.6.1
         # run: python -m cibuildwheel --output-dir wheelhouse
