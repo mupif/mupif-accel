@@ -7,7 +7,7 @@ jobs:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false # see if other jobs finish
+      fail-fast: true # false # see if other jobs finish
       matrix:
         # don't run under windows for now (MSVC not found by cmake, despite ilammy/msvc-dev-cmd)
         os: [ubuntu-20.04, windows-2019, macOS-10.15]
@@ -21,9 +21,6 @@ jobs:
         # https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B#Internal_version_numbering
         with:
           toolset: "14.1"
-      - uses: ilammy/msvc-dev-cmd@v1
-        with:
-          toolset: "14.20"
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           toolset: "14.30"
