@@ -31,6 +31,7 @@ jobs:
         # skip 32-bit builds and PyPy
         env:
             CIBW_SKIP: "*-win32 *-manylinux_i686 pp* *-musllinux_*"
+            MSVC_TOOLSET_VERSION: "141" 
       - uses: actions/upload-artifact@v2
         with:
           path: ./wheelhouse/*.whl
