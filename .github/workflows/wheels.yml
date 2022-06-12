@@ -23,9 +23,6 @@ jobs:
           toolset: "14.1"
       - uses: ilammy/msvc-dev-cmd@v1
         with:
-          toolset: "14.11"
-      - uses: ilammy/msvc-dev-cmd@v1
-        with:
           toolset: "14.20"
       - uses: ilammy/msvc-dev-cmd@v1
         with:
