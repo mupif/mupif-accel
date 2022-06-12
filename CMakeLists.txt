@@ -23,9 +23,9 @@ FetchContent_MakeAvailable(Eigen3)
 
 # workaround for Windows where MCSV + gfortran is detected (ouch)
 # https://gitlab.com/libeigen/eigen/-/issues/114
-set(EIGEN_Fortran_COMPILER_WORKS FALSE)
 
-find_package(Eigen3 REQUIRED CONFIG)
+set(EIGEN_BUILD_TESTING OFF)
+find_package(Eigen3 REQUIRED NO_MODULES)
 
 # installed via pyproject.toml
 find_package(pybind11 REQUIRED)
