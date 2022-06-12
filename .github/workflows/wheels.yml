@@ -24,6 +24,12 @@ jobs:
       - name: Prepare MSVC
         if:   ${{ matrix.os=='windows-2019' }}
         uses: bus1/cabuild/action/msdevshell@v1
+      # copied from https://github.com/STORM-IRIT/Radium-Engine/blob/2c9797bbc3660940bd022d200db2bcc3db8045b0/.github/workflows/build-matrix.yml#L44
+      # see here: https://gitlab.com/libeigen/eigen/-/issues/2421
+      - uses: seanmiddleditch/gha-setup-ninja@master
+      - name: Add msbuild to PATH
+        uses: seanmiddleditch/gha-setup-vsdevenv@master
+        if: runner.os == 'Windows'
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.6.1
         # run: python -m cibuildwheel --output-dir wheelhouse
