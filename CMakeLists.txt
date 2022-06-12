@@ -20,7 +20,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Eigen3)
 
 
-find_package(Eigen3 REQUIRED)
+find_package(Eigen3 REQUIRED CONFIG)
 
 # installed via pyproject.toml
 find_package(pybind11 REQUIRED)
