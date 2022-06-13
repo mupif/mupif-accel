@@ -1,4 +1,8 @@
 from skbuild import setup
+import sys
+
+if sys.platform=='win32':
+    cmake_args=['-G','Visual Studio 16 2019']
 
 setup(
     name="mupif-accel",
@@ -10,4 +14,5 @@ setup(
     package_dir={'': 'src'},
     cmake_install_dir='src/mupifAccel',
     python_requires='>=3.8',
+    cmake_args=cmake_args
 )
