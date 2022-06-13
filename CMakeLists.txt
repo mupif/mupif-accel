@@ -6,12 +6,16 @@ set(CMAKE_CXX_STANDARD 14)
 include(GNUInstallDirs)
 include(FetchContent)
 
-#FetchContent_Declare(
-#  pybind11
-#  URL https://github.com/pybind/pybind11/archive/refs/tags/v2.9.2.tar.gz
-#  URL_HASH SHA256=6bd528c4dbe2276635dc787b6b1f2e5316cf6b49ee3e150264e455a0d68d19c1
-#)
-#FetchContent_MakeAvailable(pybind11)
+# pybind11[global] from pyproject.toml does not work under windows, so use FetchContent instead
+if(WIN32)
+  FetchContent_Declare(
+    pybind11
+    GIT_REPOSITORY "https://github.com/pybind/pybind11"
+    GIT_TAG "v2.9.2"
+    GIT_SHALLOW ON
+  )
+  FetchContent_MakeAvailable(pybind11)
+endif(WIN32)
 
 FetchContent_Declare(
   Eigen3
@@ -24,9 +28,8 @@ FetchContent_MakeAvailable(Eigen3)
 
 # workaround for Windows where MCSV + gfortran is detected (ouch)
 # https://gitlab.com/libeigen/eigen/-/issues/114
-# set(EIGEN_BUILD_TESTING OFF)
-
-set(CMAKE_Fortran_COMPILER NOTFOUND) # try this instead
+set(EIGEN_BUILD_TESTING OFF)
+# set(CMAKE_Fortran_COMPILER NOTFOUND) # try this instead
 find_package(Eigen3 REQUIRED NO_MODULES)
 
 # installed via pyproject.toml
