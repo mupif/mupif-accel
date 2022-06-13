@@ -6,16 +6,9 @@ set(CMAKE_CXX_STANDARD 14)
 include(GNUInstallDirs)
 include(FetchContent)
 
-# pybind11[global] from pyproject.toml does not work under windows, so use FetchContent instead
-if(WIN32)
-  FetchContent_Declare(
-    pybind11
-    GIT_REPOSITORY "https://github.com/pybind/pybind11"
-    GIT_TAG "v2.9.2"
-    GIT_SHALLOW ON
-  )
-  FetchContent_MakeAvailable(pybind11)
-endif(WIN32)
+# workaround for Windows where MCSV + gfortran is detected (ouch)
+# https://gitlab.com/libeigen/eigen/-/issues/114
+set(EIGEN_BUILD_TESTING OFF)
 
 FetchContent_Declare(
   Eigen3
@@ -24,16 +17,28 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Eigen3)
 
-
-
-# workaround for Windows where MCSV + gfortran is detected (ouch)
-# https://gitlab.com/libeigen/eigen/-/issues/114
-set(EIGEN_BUILD_TESTING OFF)
 # set(CMAKE_Fortran_COMPILER NOTFOUND) # try this instead
-find_package(Eigen3 REQUIRED NO_MODULES)
+#find_package(Eigen3 REQUIRED NO_MODULES)
+# pybind11[global] from pyproject.toml does not work under windows, so use FetchContent instead
 
-# installed via pyproject.toml
-find_package(pybind11 REQUIRED)
+
+if(WIN32)
+  FetchContent_Declare(
+    pybind11
+    GIT_REPOSITORY "https://github.com/pybind/pybind11"
+    GIT_TAG "v2.9.2"
+    GIT_SHALLOW ON
+  )
+  FetchContent_MakeAvailable(pybind11)
+else(WIN32)
+  # installed via pyproject.toml
+  find_package(pybind11 REQUIRED)
+endif(WIN32)
+
+
+
+
+
 # find_package(Boost COMPONENTS multi_array)
 
 pybind11_add_module(fastOctant src/mupifAccel/fastOctant.cpp)
