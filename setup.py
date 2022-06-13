@@ -3,6 +3,7 @@ import sys
 
 if sys.platform=='win32':
     cmake_args=['-G','Visual Studio 16 2019']
+else: cmake_args=[]
 
 setup(
     name="mupif-accel",
